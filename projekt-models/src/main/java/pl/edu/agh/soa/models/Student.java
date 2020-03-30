@@ -38,6 +38,14 @@ public class Student {
         return courses.add(course);
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
     public String getFirstName() {
         return firstName;
     }

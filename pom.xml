@@ -36,6 +36,7 @@
         <module>soap-api</module>
         <module>projekt-web</module>
         <module>projekt-ear</module>
+        <module>projekt-models</module>
     </modules>
 
     <properties>
