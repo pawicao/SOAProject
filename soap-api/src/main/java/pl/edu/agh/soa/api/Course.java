@@ -1,4 +1,4 @@
-package pl.edu.agh.soa.models;
+package pl.edu.agh.soa.api;
 
 import java.util.HashMap;
 import java.util.Map;

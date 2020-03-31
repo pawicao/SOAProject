@@ -1,15 +1,17 @@
-package pl.edu.agh.soa.models;
-
+package pl.edu.agh.soa.api;
+import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student {
+public class Student implements Serializable {
     private int idx;
     private String firstName;
     private String lastName;
     private String avatarFilePath;
     private int age;
     private String faculty;
+
     private List<Course> courses = new ArrayList<>();
 
     public Student(String firstName, String lastName, int age) {

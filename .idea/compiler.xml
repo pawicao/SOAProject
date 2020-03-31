@@ -7,10 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="projekt-ear" />
+        <module name="soap-connector" />
         <module name="soap-api" />
         <module name="projekt-web" />
-        <module name="projekt-models" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="projekt-models" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

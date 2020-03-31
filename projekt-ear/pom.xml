@@ -51,6 +51,17 @@
             <groupId>pl.edu.agh.soa</groupId>
             <artifactId>soap-api</artifactId>
             <type>ejb</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>samples</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>release-documentation</artifactId>
+                </exclusion>
+
+            </exclusions>
         </dependency>
     </dependencies>
 
