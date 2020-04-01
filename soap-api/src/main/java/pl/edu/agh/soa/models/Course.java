@@ -1,11 +1,11 @@
-package pl.edu.agh.soa.api;
+package pl.edu.agh.soa.models;
 
+import javax.xml.bind.annotation.XmlType;
 import java.util.HashMap;
 import java.util.Map;
 
+@XmlType(propOrder={"name","ects"})
 public class Course {
-    static Map<String, Course> courses = new HashMap<>();
-
     private String name;
     private int ects;
 
@@ -17,6 +17,10 @@ public class Course {
     public Course(String name) {
         this.name = name;
         this.ects = 0;
+    }
+
+    public Course() {
+        //No-arg constructor is just to keep JAXB from complaining
     }
 
     public String getName() {
@@ -33,5 +37,13 @@ public class Course {
 
     public void setEcts(int ects) {
         this.ects = ects;
+    }
+
+
+    static Map<String, Course> courses = new HashMap<>();
+    static Course createCourse(String name, int ects) {
+        Course course = new Course(name, ects);
+        courses.put(name, course);
+        return course;
     }
 }

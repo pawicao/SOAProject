@@ -1,9 +1,10 @@
 package pl.edu.agh.soa.api;
 
-import org.jboss.annotation.security.SecurityDomain;
 import org.jboss.ws.api.annotation.WebContext;
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.RolesAllowed;
+import pl.edu.agh.soa.models.Course;
+import pl.edu.agh.soa.models.Student;
+import pl.edu.agh.soa.models.StudentList;
+
 import javax.jws.WebParam;
 import javax.xml.bind.annotation.*;
 import javax.ejb.Stateless;
@@ -57,13 +58,20 @@ public class StudentService {
     }
 
     @WebMethod
+    @XmlElementWrapper(name = "students")
+    @XmlElement(name = "student")
+    public List<Student> getStudentsByAge(@WebParam(name = "age") int age) {
+        return students.getStudentsByAge(age);
+    }
+
+    @WebMethod
     @XmlElementWrapper(name = "courses")
     @XmlElement(name = "course")
     public List<Course> getStudentsCourses(@WebParam(name = "idx") int idx) {
         Student student = students.getStudentByIdx(idx);
         if (student == null)
             return new ArrayList<>();
-        return students.getStudentsCourses(student);
+        return student.getCourses();
     }
 
     @WebMethod

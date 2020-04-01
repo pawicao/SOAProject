@@ -1,10 +1,12 @@
-package pl.edu.agh.soa.api;
-import javax.xml.bind.annotation.*;
-import java.io.Serializable;
+package pl.edu.agh.soa.models;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student implements Serializable {
+@XmlType(propOrder={"idx", "firstName", "lastName","avatarFilePath","age","faculty","courses"})
+public class Student {
     private int idx;
     private String firstName;
     private String lastName;
@@ -30,6 +32,15 @@ public class Student implements Serializable {
         this.idx = idx;
     }
 
+    public Student(String firstName, String lastName, int age, String faculty, int idx, List<Course> courses) {
+        this(firstName, lastName, age, faculty, idx);
+        this.courses = courses;
+    }
+
+    public Student() {
+        //No-arg constructor is just to keep JAXB from complaining
+    }
+
     public boolean addCourse(String courseName) {
         Course course = Course.courses.get(courseName);
         if(course == null) {
@@ -40,6 +51,18 @@ public class Student implements Serializable {
         return courses.add(course);
     }
 
+    public boolean addCourse(Course course) {
+        Course resCourse = Course.courses.get(course.getName());
+        if(resCourse == null) {
+            Course.courses.put(course.getName(), course);
+            return courses.add(course);
+        }
+        courses.add(course);
+        return true;
+    }
+
+    @XmlElementWrapper(name = "courses")
+    @XmlElement(name = "course")
     public List<Course> getCourses() {
         return courses;
     }
