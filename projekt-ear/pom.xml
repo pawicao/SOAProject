@@ -22,7 +22,7 @@
     <parent>
         <artifactId>projekt</artifactId>
         <groupId>pl.edu.agh.soa</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>projekt-ear</artifactId>

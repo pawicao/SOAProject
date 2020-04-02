@@ -7,6 +7,9 @@ import java.util.List;
 
 @XmlType(propOrder={"idx", "firstName", "lastName","avatarFilePath","age","faculty","courses"})
 public class Student {
+
+    private static String defaultAvatarPath = "defaultAvatar.jpg";
+
     private int idx;
     private String firstName;
     private String lastName;
@@ -20,6 +23,7 @@ public class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        avatarFilePath = Student.defaultAvatarPath;
     }
 
     public Student(String firstName, String lastName, int age, String faculty) {

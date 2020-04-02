@@ -22,7 +22,7 @@
     <parent>
         <artifactId>projekt</artifactId>
         <groupId>pl.edu.agh.soa</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>soap-api</artifactId>
@@ -135,6 +135,13 @@
             <artifactId>jaxb-impl</artifactId>
             <version>2.3.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
@@ -156,6 +163,11 @@
                 <configuration>
                     <!-- Tell Maven we are using EJB 3.1 -->
                     <ejbVersion>3.1</ejbVersion>
+                    <archive>
+                        <manifestEntries>
+                            <Class-Path>resources</Class-Path>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
@@ -195,6 +207,7 @@
                 <dependency>
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
+                    <version>2.1.1.Final</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -205,12 +218,14 @@
                 in a remote WildFly instance -->
             <!-- Run with: mvn clean test -Parq-wildfly-remote -->
             <id>arq-wildfly-remote</id>
-            <dependencies>
+            <dependencies><!-- https://mvnrepository.com/artifact/org.wildfly/wildfly-arquillian-container-remote -->
                 <dependency>
                     <groupId>org.wildfly</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
+                    <version>8.2.1.Final</version>
                     <scope>test</scope>
                 </dependency>
+
             </dependencies>
         </profile>
 
