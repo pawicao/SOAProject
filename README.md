@@ -1,8 +1,10 @@
 Student Service - multi-module JavaEE Project
-==============================================================================================
+==============================================================================================  
+
 Author: Oskar Pawica  
 Technologies: Java8, Maven, Wildfly, Java EE, JAX-WS  
 Project for "Service Oriented Architecture" AGH course  
+
 What is it?
 -----------
 
