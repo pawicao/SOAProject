@@ -44,7 +44,7 @@ Build and Deploy the project
 Access the application 
 ---------------------
 
-The WSDL file of the application will be available at the following URL: <http://localhost:8080/soa/StudentService?wsdl>.
+The WSDL file of the application will be available at the following URL: <http://localhost:8080/soa/studentService?wsdl>.
 
 1. Run SoapUI.
 2. Create a new project and paste the URL of the WSDL file in the configuration
