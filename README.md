@@ -29,7 +29,7 @@ Start JBoss WildFly with the Web Profile
         For Windows: JBOSS_HOME\bin\standalone.bat
 
  
-Build and Deploy the Quickstart
+Build and Deploy the project
 -------------------------
 
 1. Make sure you have started the JBoss Server as described above.
