@@ -1,0 +1,17 @@
+syntax = "proto3";
+option java_outer_classname = "StudentProto";
+
+message Student {
+    int32 idx = 1;
+    string first_name = 2;
+    string last_name = 3;
+    string avatar_filepath = 4;
+    int32 age = 5;
+    repeated Course courses = 6;
+    string faculty = 7;
+}
+
+message Course {
+    string name = 1;
+    int32 ects = 2;
+}
