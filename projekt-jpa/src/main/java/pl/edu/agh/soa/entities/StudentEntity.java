@@ -48,11 +48,11 @@ public class StudentEntity {
     @JoinTable(
             name = "organization_member",
             joinColumns = @JoinColumn(name = "member_id"),
-            inverseJoinColumns = @JoinColumn(name = "organization_id"))
+            inverseJoinColumns = @JoinColumn(name = "organization_id")
+    )
     private Set<OrganizationEntity> organizations;
 
-    public StudentEntity() {
-    }
+    public StudentEntity() {}
 
     public int getIdx() {
         return idx;

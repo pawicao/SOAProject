@@ -77,3 +77,6 @@ fabric.properties
 /rest-connector/target/
 /soap-api/target/
 /soap-connector/target/
+/projekt-jpa/target/
+/projekt-dao/target/
+*.iml

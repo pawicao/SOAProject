@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiResponses;
 import pl.edu.agh.soa.daos.Dao;
 import pl.edu.agh.soa.daos.StudentDao;
 import pl.edu.agh.soa.embeddables.Faculty;
+import pl.edu.agh.soa.entities.CourseEntity;
+import pl.edu.agh.soa.entities.DormitoryEntity;
 import pl.edu.agh.soa.entities.OrganizationEntity;
 import pl.edu.agh.soa.entities.StudentEntity;
 import pl.edu.agh.soa.auth.RequiresAuthentication;
@@ -69,7 +71,7 @@ public class StudentController {
     }
 
     @GET
-    @Path("/testAdd")
+    @Path("/zad3/testAdd")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addTestStudent() {
         StudentEntity student = new StudentEntity();
@@ -78,7 +80,11 @@ public class StudentController {
         student.setLastName("Czlowiek");
         Set<OrganizationEntity> organizations = new HashSet<>();
         organizations.add(new OrganizationEntity("EESTEC", 1998));
+        Set<CourseEntity> courses = new HashSet<>();
+        courses.add(new CourseEntity("SOA",4));
+        student.setCourses(courses);
         student.setFaculty(new Faculty("Kanapka"));
+        student.setDormitory(new DormitoryEntity("Dom Studencki Alfa", "ALFA"));
         student.setOrganizations(organizations);
         studentDao.create(student);
 

@@ -1,15 +1,13 @@
 package pl.edu.agh.soa.daos;
 
+import pl.edu.agh.soa.entities.CourseEntity;
 import pl.edu.agh.soa.entities.StudentEntity;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,21 +37,52 @@ public class StudentDao {
     public List<StudentEntity> findAll(Map<String, String> params) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<StudentEntity> criteriaQuery = builder.createQuery(StudentEntity.class);
-        Root<StudentEntity> s = criteriaQuery.from(StudentEntity.class);
+        Root<StudentEntity> root = criteriaQuery.from(StudentEntity.class);
         if(params.isEmpty()) {
-            criteriaQuery.select(s);
+            criteriaQuery.select(root);
         }
         else {
-            criteriaQuery.select(s).where(processParameters(builder, s, params));
+            criteriaQuery.select(root).where(processParameters(builder, root, params));
         }
         TypedQuery<StudentEntity> query = manager.createQuery(criteriaQuery);
         return query.getResultList();
     }
 
-    private Predicate[] processParameters(CriteriaBuilder builder, Root<StudentEntity> s, Map<String, String> params) {
-        List<Predicate> predicates = new ArrayList<Predicate>();
+    private Predicate[] processParameters(CriteriaBuilder builder, Root<StudentEntity> root, Map<String, String> params) {
+        List<Predicate> predicates = new ArrayList<>();
         for(Map.Entry<String, String> param : params.entrySet()) {
-            predicates.add(builder.equal(s.get(param.getKey()), param.getValue()));
+            String key = param.getKey();
+            switch(key) {
+                case "courseName":
+                case "course":
+                    predicates.add(builder.equal(builder.lower(root.join("courses", JoinType.INNER).get("name"))
+                            ,param.getValue().toLowerCase()));
+                    break;
+                case "courseId":
+                    predicates.add(builder.equal(root.join("courses", JoinType.INNER).get("id"),
+                            param.getValue()));
+                    break;
+                case "faculty":
+                    predicates.add(builder.equal(builder.lower(root.get(key).get("name")),
+                            param.getValue().toLowerCase()));
+                    break;
+                case "dormitory":
+                    predicates.add(builder.equal(builder.lower(root.get(key).get("code")),
+                            param.getValue().toLowerCase()));
+                    break;
+                case "organizationName":
+                case "organization":
+                    predicates.add(builder.equal(builder.lower(root.join("organizations",JoinType.INNER).get("name"))
+                            ,param.getValue().toLowerCase()));
+                    break;
+                case "organizationId":
+                    predicates.add(builder.equal(root.join("organizations", JoinType.INNER).get("id"),
+                            param.getValue()));
+                    break;
+                default:
+                    predicates.add(builder.equal(root.get(key), param.getValue()));
+                    break;
+            }
         }
         return predicates.toArray(new Predicate[]{});
     }
