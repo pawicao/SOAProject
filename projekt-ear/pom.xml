@@ -67,7 +67,7 @@
 
     <build>
         <!--<finalName>${project.artifactId}</finalName> -->
-        <finalName>opawica-zad2</finalName>
+        <finalName>opawica-zad3</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -91,7 +91,7 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <configuration>
-                    <filename>opawica-zad2.ear</filename>
+                    <filename>opawica-zad3.ear</filename>
                     <skip>false</skip>
                 </configuration>
             </plugin>

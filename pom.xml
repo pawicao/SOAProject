@@ -39,6 +39,8 @@
         <module>soap-connector</module>
         <module>rest-connector</module>
         <module>projekt-model</module>
+        <module>projekt-jpa</module>
+        <module>projekt-dao</module>
     </modules>
 
     <properties>

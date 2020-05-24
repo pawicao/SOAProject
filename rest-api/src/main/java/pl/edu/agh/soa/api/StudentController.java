@@ -4,6 +4,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import pl.edu.agh.soa.daos.Dao;
+import pl.edu.agh.soa.daos.StudentDao;
+import pl.edu.agh.soa.embeddables.Faculty;
+import pl.edu.agh.soa.entities.OrganizationEntity;
+import pl.edu.agh.soa.entities.StudentEntity;
 import pl.edu.agh.soa.auth.RequiresAuthentication;
 import pl.edu.agh.soa.models.Course;
 import pl.edu.agh.soa.models.Student;
@@ -12,13 +17,11 @@ import pl.edu.agh.soa.models.StudentProto;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Path("/")
@@ -27,6 +30,66 @@ public class StudentController {
 
     @Inject
     private StudentList students;
+
+    @Inject
+    private StudentDao studentDao;
+
+    //
+    // Zadanie 3: Metody DAO
+    //
+
+    @GET
+    @Path("/zad3/getAll")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(
+            value = "Returns a list of students with given parameters",
+            notes = "If no parameters passed, returns all students from DB.",
+            response = StudentEntity.class,
+            responseContainer = "List"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "No students with given parameters found"),
+            @ApiResponse(code = 200, message = "Students found",
+                    response = StudentEntity.class,
+                    responseContainer = "List"
+            )
+    })
+    public Response daoGetAllStudents(
+            @Context UriInfo ui
+    ) {
+        MultivaluedMap<String, String> queryParams = ui.getQueryParameters();
+        Map<String, String> params = new HashMap<>();
+        for(String str : queryParams.keySet()){
+            params.put(str, queryParams.getFirst(str));
+        }
+        List<StudentEntity> resultList = studentDao.findAll(params);
+        if(resultList == null || resultList.size() == 0)
+            return Response.status(Response.Status.NOT_FOUND).entity("No students with given parameters found").build();
+        return Response.status(Response.Status.OK).entity(resultList).build();
+    }
+
+    @GET
+    @Path("/testAdd")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addTestStudent() {
+        StudentEntity student = new StudentEntity();
+        student.setIdx(1111);
+        student.setFirstName("Testowy");
+        student.setLastName("Czlowiek");
+        Set<OrganizationEntity> organizations = new HashSet<>();
+        organizations.add(new OrganizationEntity("EESTEC", 1998));
+        student.setFaculty(new Faculty("Kanapka"));
+        student.setOrganizations(organizations);
+        studentDao.create(student);
+
+        return Response.status(Response.Status.CREATED).entity(student).build();
+    }
+
+
+
+    //
+    // Zadanie 2: Metody
+    //
 
     @GET
     @Path("/getAll")

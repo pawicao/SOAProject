@@ -69,13 +69,6 @@
          <artifactId>jboss-jsf-api_2.2_spec</artifactId>
          <scope>provided</scope>
       </dependency>
-
-      <!-- Import the JPA API, we use provided scope as the API is included in JBoss WildFly -->
-      <dependency>
-         <groupId>org.hibernate.javax.persistence</groupId>
-         <artifactId>hibernate-jpa-2.1-api</artifactId>
-         <scope>provided</scope>
-      </dependency>
       <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
       <dependency>
          <groupId>com.google.protobuf</groupId>
@@ -100,24 +93,23 @@
       </dependency>
 
 
-      <!-- JSR-303 (Bean Validation) Implementation -->
-       <!-- Provides portable constraints such as @Email -->
-       <!-- Hibernate Validator is shipped in JBoss WildFly -->
-       <dependency>
-           <groupId>org.hibernate</groupId>
-           <artifactId>hibernate-validator</artifactId>
-           <scope>provided</scope>
-           <exclusions>
-               <exclusion>
-                   <groupId>org.slf4j</groupId>
-                   <artifactId>slf4j-api</artifactId>
-               </exclusion>
-           </exclusions>
-       </dependency>
-
       <dependency>
          <groupId>pl.edu.agh.soa</groupId>
          <artifactId>projekt-model</artifactId>
+         <version>1.0</version>
+         <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>pl.edu.agh.soa</groupId>
+         <artifactId>projekt-jpa</artifactId>
+         <version>1.0</version>
+         <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>pl.edu.agh.soa</groupId>
+         <artifactId>projekt-dao</artifactId>
          <version>1.0</version>
          <scope>compile</scope>
       </dependency>
