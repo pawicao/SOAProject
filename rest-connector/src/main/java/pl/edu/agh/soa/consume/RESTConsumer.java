@@ -14,10 +14,7 @@ import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
 
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -49,12 +46,12 @@ public class RESTConsumer {
     }
 
     public void authorize() {
-        ResteasyWebTarget target = resteasyClient.target(authorizationEndpoint)
-                .queryParam("username", username)
-                .queryParam("password", password);
-        Response response = target.request().get();
+        ResteasyWebTarget target = resteasyClient.target(authorizationEndpoint);
+        Form form = new Form();
+        form.param("username", username);
+        form.param("password", password);
+        Response response = target.request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
         token = response.readEntity(String.class);
-
         resteasyClient.register((ClientRequestFilter) clientRequestContext ->
                 clientRequestContext.getHeaders().add("Authorization", "Bearer " + token));
     }
@@ -247,25 +244,31 @@ public class RESTConsumer {
 
     public static void main(String[] args) {
         // Comment out below line for endpoints from Task 2
-        studentEndpoint += "zad3/";
+        //studentEndpoint += "zad3/";
 
         // Consumer initialization
-        RESTConsumer consumer = new RESTConsumer("admin1","password");
+        RESTConsumer consumer = new RESTConsumer("admin1","pasksword");
 
         // Fill database with dummy data
         consumer.fillWithDummyData();
 
         // Show all students
-        for(Student st : consumer.getAllStudents(null)) {
-            System.out.println(st.toString());
+        List<Student> studentList = consumer.getAllStudents(null);
+        if (studentList != null) {
+            for(Student st : studentList) {
+                System.out.println(st.toString());
+            }
         }
 
         // Show students list with parameters (Faculty of EAIiIB and age of 22)
         MultivaluedMap<String, Object> parameters = new MultivaluedMapImpl<>();
         parameters.add("faculty","EAIiIB");
         parameters.add("age", 22);
-        for(Student st : consumer.getAllStudents(parameters)) {
-            System.out.println(st.toString());
+        studentList = consumer.getAllStudents(parameters);
+        if (studentList != null) {
+            for (Student st : studentList) {
+                System.out.println(st.toString());
+            }
         }
 
         // Show one student
@@ -298,8 +301,11 @@ public class RESTConsumer {
         System.out.println(consumer.addStudent(nStudent));
 
         // Show all students (to show the deletion of one student and the other student added)
-        for(Student st : consumer.getAllStudents(null)) {
-            System.out.println(st.toString());
+        studentList = consumer.getAllStudents(null);
+        if (studentList != null) {
+            for (Student st : studentList) {
+                System.out.println(st.toString());
+            }
         }
 
         // Ending client session

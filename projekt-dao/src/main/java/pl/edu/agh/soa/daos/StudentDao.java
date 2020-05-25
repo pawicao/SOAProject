@@ -58,7 +58,10 @@ public class StudentDao {
             criteriaQuery.select(root).where(processParameters(builder, root, params));
         }
         TypedQuery<StudentEntity> query = manager.createQuery(criteriaQuery);
-        return query.getResultList().stream().map(StudentDao::entityToModel).collect(Collectors.toList());
+        List<StudentEntity> resultList = query.getResultList();
+        if(resultList == null)
+            return null;
+        return resultList.stream().map(StudentDao::entityToModel).collect(Collectors.toList());
     }
 
     private Predicate[] processParameters(CriteriaBuilder builder, Root<StudentEntity> root, Map<String, String> params) {

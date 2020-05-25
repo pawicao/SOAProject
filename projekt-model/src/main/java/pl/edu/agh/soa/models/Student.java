@@ -196,7 +196,7 @@ public class Student {
             }
         }
         if(!publications.isEmpty()) {
-            result.append("\n\tPublications:\n");
+            result.append("\tPublications:\n");
             for (Publication publication : publications) {
                 result.append("\t\t").append(publication.getName()).append('\n');
             }

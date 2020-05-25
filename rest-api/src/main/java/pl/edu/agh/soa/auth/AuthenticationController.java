@@ -25,7 +25,7 @@ public class AuthenticationController {
             throw new NotAuthorizedException("Invalid credentials");
     }
 
-    @GET
+    @POST
     @Path("/auth")
     @ApiOperation(
             value = "Returns a token required for POST, PUT, DELETE methods of Student Controller",
@@ -37,7 +37,8 @@ public class AuthenticationController {
             @ApiResponse(code = 200, message = "Returns a token."),
             @ApiResponse(code = 500, message = "Unexpected internal server error")
     })
-    public Response createToken(@QueryParam("username") String username, @QueryParam("password") String password) {
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    public Response createToken(@FormParam("username") String username, @FormParam("password") String password) {
         if (username == null || password == null)
             return Response.status(Response.Status.BAD_REQUEST)
                     .header("WWW-Authenticate", "Missing credentials").build();

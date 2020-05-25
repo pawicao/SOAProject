@@ -20,7 +20,6 @@
         http://xmlns.jcp.org/xml/ns/persistence
         http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="students">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>pl.edu.agh.soa.entities.StudentEntity</class>
         <class>pl.edu.agh.soa.entities.DormitoryEntity</class>
         <class>pl.edu.agh.soa.entities.CourseEntity</class>

@@ -3,6 +3,7 @@ package pl.edu.agh.soa;
 import io.swagger.jaxrs.config.BeanConfig;
 import pl.edu.agh.soa.api.StudentController;
 import pl.edu.agh.soa.auth.AuthenticationController;
+import pl.edu.agh.soa.auth.JWTFilter;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -29,6 +30,7 @@ public class StudentApp extends Application {
 
         resources.add(StudentController.class);
         resources.add(AuthenticationController.class);
+        resources.add(JWTFilter.class);
         resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);
         resources.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
 

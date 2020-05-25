@@ -23,8 +23,7 @@ public class JWTFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) {
         String authHeaderValue = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-
-        if (authHeaderValue == null || !authHeaderValue.startsWith("Bearer")) {
+        if (authHeaderValue == null || !authHeaderValue.startsWith("Bearer ")) {
             throw new NotAuthorizedException("No authorization header provided.");
         }
 
