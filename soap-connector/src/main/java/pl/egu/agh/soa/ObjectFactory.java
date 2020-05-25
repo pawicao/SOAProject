@@ -247,6 +247,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Dormitory }
+     * 
+     */
+    public Dormitory createDormitory() {
+        return new Dormitory();
+    }
+
+    /**
+     * Create an instance of {@link Organization }
+     * 
+     */
+    public Organization createOrganization() {
+        return new Organization();
+    }
+
+    /**
+     * Create an instance of {@link Publication }
+     * 
+     */
+    public Publication createPublication() {
+        return new Publication();
+    }
+
+    /**
      * Create an instance of {@link Student.Courses }
      * 
      */

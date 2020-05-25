@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -18,11 +19,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="idx" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="idx" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="avatarFilePath" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="age" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="age" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="faculty" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="courses" minOccurs="0"&gt;
  *           &lt;complexType&gt;
@@ -35,6 +36,9 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/complexContent&gt;
  *           &lt;/complexType&gt;
  *         &lt;/element&gt;
+ *         &lt;element name="dormitory" type="{http://api.soa.agh.edu.pl/}dormitory" minOccurs="0"/&gt;
+ *         &lt;element name="organizations" type="{http://api.soa.agh.edu.pl/}organization" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="publications" type="{http://api.soa.agh.edu.pl/}publication" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -51,31 +55,47 @@ import javax.xml.bind.annotation.XmlType;
     "avatarFilePath",
     "age",
     "faculty",
-    "courses"
+    "courses",
+    "dormitory",
+    "organizations",
+    "publications"
 })
 public class Student {
 
-    protected int idx;
+    protected Integer idx;
     protected String firstName;
     protected String lastName;
     protected String avatarFilePath;
-    protected int age;
+    protected Integer age;
     protected String faculty;
     protected Student.Courses courses;
+    protected Dormitory dormitory;
+    @XmlElement(nillable = true)
+    protected List<Organization> organizations;
+    @XmlElement(nillable = true)
+    protected List<Publication> publications;
 
     /**
      * Gets the value of the idx property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
      */
-    public int getIdx() {
+    public Integer getIdx() {
         return idx;
     }
 
     /**
      * Sets the value of the idx property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
      */
-    public void setIdx(int value) {
+    public void setIdx(Integer value) {
         this.idx = value;
     }
 
@@ -154,16 +174,24 @@ public class Student {
     /**
      * Gets the value of the age property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
      */
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
     /**
      * Sets the value of the age property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
      */
-    public void setAge(int value) {
+    public void setAge(Integer value) {
         this.age = value;
     }
 
@@ -213,6 +241,88 @@ public class Student {
      */
     public void setCourses(Student.Courses value) {
         this.courses = value;
+    }
+
+    /**
+     * Gets the value of the dormitory property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Dormitory }
+     *     
+     */
+    public Dormitory getDormitory() {
+        return dormitory;
+    }
+
+    /**
+     * Sets the value of the dormitory property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Dormitory }
+     *     
+     */
+    public void setDormitory(Dormitory value) {
+        this.dormitory = value;
+    }
+
+    /**
+     * Gets the value of the organizations property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the organizations property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getOrganizations().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Organization }
+     * 
+     * 
+     */
+    public List<Organization> getOrganizations() {
+        if (organizations == null) {
+            organizations = new ArrayList<Organization>();
+        }
+        return this.organizations;
+    }
+
+    /**
+     * Gets the value of the publications property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the publications property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getPublications().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Publication }
+     * 
+     * 
+     */
+    public List<Publication> getPublications() {
+        if (publications == null) {
+            publications = new ArrayList<Publication>();
+        }
+        return this.publications;
     }
 
 

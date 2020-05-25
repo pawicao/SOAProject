@@ -7,6 +7,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jboss.resteasy.specimpl.MultivaluedMapImpl;
 import pl.edu.agh.soa.models.Course;
 import pl.edu.agh.soa.models.Student;
+import pl.edu.agh.soa.models.StudentList;
 import pl.edu.agh.soa.models.StudentProto;
 
 import javax.ws.rs.client.ClientRequestContext;
@@ -23,7 +24,7 @@ import java.util.*;
 
 public class RESTConsumer {
     private final static String authorizationEndpoint = "http://localhost:8080/rest-api/students/auth";
-    private final static String studentEndpoint = "http://localhost:8080/rest-api/students/";
+    private static String studentEndpoint = "http://localhost:8080/rest-api/students/";
     private final static String CLIMethodSeperator = "\n=============";
 
     private ResteasyClient resteasyClient;
@@ -207,8 +208,33 @@ public class RESTConsumer {
         return result;
     }
 
-    public String getUsername() {
-        return username;
+    public void fillWithDummyData() {
+        if(token == null) {
+            authorize();
+        }
+
+        // Getting all students
+        List<Student> allStudents = new ArrayList<>();
+        ResteasyWebTarget getAllTarget = resteasyClient.target(studentEndpoint + "getAll");
+        Response getAllResponse = getAllTarget.request().get();
+        int responseStatus = getAllResponse.getStatus();
+        if(responseStatus == 200) {
+            allStudents = getAllResponse.readEntity(new GenericType<List<Student>>() {});
+        }
+        getAllResponse.close();
+        for(Student studentToDelete : allStudents) {
+            ResteasyWebTarget deleteAllTarget = resteasyClient.target(studentEndpoint + "delete/" + studentToDelete.getIdx());
+            Response deleteResponse = deleteAllTarget.request().delete();
+            deleteResponse.close();
+        }
+
+        ResteasyWebTarget target = resteasyClient.target(studentEndpoint + "add");
+        List<Student> dummyList = StudentList.createSampleList();
+        for(Student dummy : dummyList) {
+            Response response = target.request().post(Entity.entity(dummy, MediaType.APPLICATION_JSON_TYPE));
+            response.close();
+        }
+        System.out.println("FILLED WITH DUMMY DATA.");
     }
 
     public void setUsername(String username) {
@@ -219,14 +245,15 @@ public class RESTConsumer {
         this.password = password;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public static void main(String[] args) {
+        // Comment out below line for endpoints from Task 2
+        studentEndpoint += "zad3/";
 
         // Consumer initialization
         RESTConsumer consumer = new RESTConsumer("admin1","password");
+
+        // Fill database with dummy data
+        consumer.fillWithDummyData();
 
         // Show all students
         for(Student st : consumer.getAllStudents(null)) {

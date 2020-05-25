@@ -9,7 +9,7 @@ public class DormitoryEntity {
     @GeneratedValue
     @Id
     @Column(name = "dorm_id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -24,11 +24,11 @@ public class DormitoryEntity {
         this.code = code;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

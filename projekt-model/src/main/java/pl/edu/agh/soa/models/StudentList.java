@@ -72,7 +72,7 @@ public class StudentList {
         return resultList;
     }
 
-    private List<Student> createSampleList () {
+    public static List<Student> createSampleList () {
         List<Student> listOfStudents = new ArrayList<>();
 
         List<Course> computerScienceCourses = new ArrayList<>();
@@ -95,21 +95,29 @@ public class StudentList {
         electronicsCourses.add(Course.createCourse("Problemy termiczne w układach elektronicznych",
                 2));
 
+        List<Organization> organizations = new ArrayList<>();
+        List<Organization> organizations2 = new ArrayList<>();
+        organizations.add(Organization.createOrganization("EESTEC", 1998));
+        organizations2.add(Organization.organizations.get("EESTEC"));
+        organizations2.add(new Organization("BEST", 1994));
+        List<Publication> publications = new ArrayList<>();
+        publications.add(new Publication("How to write web applications?"));
+
         listOfStudents.add(new Student("Oskar","Pawica",22,"EAIiIB",
-                297270,computerScienceCourses));
+                297270,computerScienceCourses, organizations,publications));
         listOfStudents.add(new Student("Jan","Kowalski",22,"EAIiIB",
-                226720,computerScienceCourses));
+                226720,computerScienceCourses, organizations));
         listOfStudents.add(new Student("Andrzej","Kowalski",25,"EAIiIB",
-                292730,computerScienceCourses));
+                292730,computerScienceCourses, new Dormitory("Dom Studencki KAPITOL", "DS14 KAPITOL")));
         listOfStudents.add(new Student("Jan","Nowak",28,"EAIiIB",
                 298560,computerScienceCourses));
 
         listOfStudents.add(new Student("Marian","Kowalski",21,"IEiT",
                 414242,electronicsCourses));
         listOfStudents.add(new Student("Jaromir","Nowak",22,"IEiT",
-                636468,electronicsCourses));
+                636468,electronicsCourses, organizations2));
         listOfStudents.add(new Student("Krzysztof","Krawczyk",73,"IEiT",
-                532434,electronicsCourses));
+                532434,electronicsCourses,new Dormitory("Dom Studencki OLIMP", "DS1 Olimp")));
         listOfStudents.add(new Student("Piotr","Piotrowski",24,"IEiT",
                 111222,electronicsCourses));
 

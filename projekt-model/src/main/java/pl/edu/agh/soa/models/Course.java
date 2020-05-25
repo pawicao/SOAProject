@@ -41,7 +41,7 @@ public class Course {
 
 
     static Map<String, Course> courses = new HashMap<>();
-    static Course createCourse(String name, int ects) {
+    public static Course createCourse(String name, int ects) {
         Course course = new Course(name, ects);
         courses.put(name, course);
         return course;

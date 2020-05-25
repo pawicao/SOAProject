@@ -1,6 +1,5 @@
 syntax = "proto3";
 option java_outer_classname = "StudentProto";
-
 message Student {
     int32 idx = 1;
     string first_name = 2;
